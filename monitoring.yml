@@ -1,0 +1,6 @@
+---
+- hosts: monitoring
+  roles:  
+    - common
+    - monitoring
+...

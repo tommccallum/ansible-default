@@ -1,0 +1,5 @@
+---
+vars_files:
+  - ~/public_keys.yml
+
+...

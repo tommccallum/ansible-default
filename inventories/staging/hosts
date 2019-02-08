@@ -1,0 +1,7 @@
+[lon-devservers]
+auto1.tom-mccallum.com
+auto2.tom-mccallum.com
+
+[devservers:children]
+lon-devservers
+

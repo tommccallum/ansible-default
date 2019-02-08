@@ -1,0 +1,30 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: false
+
+  tasks:
+  - set_fact:
+      domainname: {{ domain }}
+      hostname: {{ host }}.{{ domain }}
+      rax_username: {{ OS_USERNAME }}
+      rax_apikey: {{ OS_PASSWORD }}
+      update_dns: False
+
+  - name: get host ip address using ipconfig
+    command: ipconfig
+    register: host_ip
+
+  - name: Identify current DNS A record of Dynamic DNS host
+    command: dig +short {{ hostname }}
+    register: dyndns_host
+
+  - name: Determine if DNS A record needs to be updated 
+    set_fact:
+      update_dns: True 
+    when: host_ip.stdout != dyndns_host.stdout
+
+  - name: Update DNS A record
+    command: dyndns.sh
+    when: update_dns == True
+...
